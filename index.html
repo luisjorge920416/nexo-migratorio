@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXO - Portal Oficial de Trámites Migratorios</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        hud: {
+                            bg: '#050b14',
+                            card: '#0a1628',
+                            border: '#1e3a8a',
+                            cyan: '#06b6d4',
+                            blue: '#3b82f6',
+                            accent: '#10b981'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #050b14; color: #e2e8f0; }
+        .font-hud { font-family: 'Orbitron', sans-serif; }
+        .hud-border { border: 1px solid rgba(6, 182, 212, 0.3); box-shadow: 0 0 15px rgba(6, 182, 212, 0.1); }
+        .scanline { background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(6, 182, 212, 0.1) 50%, rgba(6, 182, 212, 0.1)); background-size: 100% 4px; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col scanline">
+
+    <!-- TOP HUD NAVBAR -->
+    <header class="bg-hud-card border-b border-hud-border px-6 py-4 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-full bg-cyan-900/50 border border-hud-cyan flex items-center justify-center text-cyan-cyan animate-pulse">
+                <i class="fa-solid fa-file-invoice text-lg"></i>
+            </div>
+            <div>
+                <h1 class="font-hud font-bold text-xl text-cyan-400 tracking-wider">NEXO <span class="text-xs px-2 py-0.5 rounded bg-blue-900 text-blue-300 border border-blue-500">MODELO OFICIAL v16.0</span></h1>
+                <p class="text-xs text-slate-400">Expedientes Exactos para la Polícia Federal</p>
+            </div>
+        </div>
+        <div id="userNavInfo" class="hidden flex items-center space-x-4">
+            <span id="navUserBadge" class="text-xs px-3 py-1 rounded-full bg-slate-800 border border-cyan-500/50 text-cyan-300">Cliente Online</span>
+            <button onclick="logout()" class="text-xs text-red-400 hover:text-red-300 border border-red-500/30 px-3 py-1 rounded transition hover:bg-red-950/30">
+                <i class="fa-solid fa-power-off mr-1"></i> Salir
+            </button>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
+
+        <!-- 1. ACCESO CLIENTE -->
+        <section id="viewLogin" class="max-w-md mx-auto mt-12 bg-hud-card p-8 rounded-xl hud-border">
+            <div class="text-center mb-6">
+                <div class="inline-block p-3 rounded-full bg-cyan-950 border border-cyan-500 mb-2">
+                    <i class="fa-solid fa-id-card text-3xl text-cyan-400"></i>
+                </div>
+                <h2 class="font-hud text-2xl font-bold text-cyan-400">ACCESO CLIENTE</h2>
+                <p class="text-sm text-slate-400 mt-1">Plataforma Oficial de Trámites Migratorios</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-medium text-slate-300 mb-1">Correo Electrónico</label>
+                    <input type="email" id="loginEmail" placeholder="cliente@correo.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white focus:border-cyan-400 focus:outline-none">
+                </div>
+                <button onclick="clientLogin()" class="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-medium rounded-lg text-sm transition shadow-lg shadow-cyan-900/50">
+                    Ingresar al Portal
+                </button>
+                <div class="mt-4 pt-4 border-t border-slate-800 text-center">
+                    <button onclick="switchAdminMode()" class="text-xs text-slate-400 hover:text-cyan-400 underline">
+                        Panel de Administración (Gestor NEXO)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. SELECCIÓN DE SERVICIOS -->
+        <section id="viewServices" class="hidden space-y-6">
+            <div class="bg-hud-card p-6 rounded-xl hud-border">
+                <span class="text-xs text-cyan-400 font-hud">PASO 1: SELECCIÓN DE TRÁMITES</span>
+                <h2 class="font-hud text-xl font-bold text-white mt-1">¿Qué procesos necesitas realizar?</h2>
+                <p class="text-xs text-slate-400 mt-1">Selecciona los servicios requeridos para armar tu expediente con el diseño oficial de la PF.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="bg-hud-card p-4 rounded-xl border border-slate-800 hover:border-cyan-500 cursor-pointer transition flex items-start space-x-3">
+                    <input type="checkbox" name="servicios" value="Llenado do CONARE" checked class="mt-1 w-4 h-4 text-cyan-600 bg-slate-900 border-slate-700 rounded">
+                    <div>
+                        <span class="font-hud font-bold text-sm text-cyan-300 block">Llenado y Registro del CONARE</span>
+                        <span class="text-xs text-slate-400">Solicitud de reconocimiento de refugiado.</span>
+                    </div>
+                </label>
+
+                <label class="bg-hud-card p-4 rounded-xl border border-slate-800 hover:border-cyan-500 cursor-pointer transition flex items-start space-x-3">
+                    <input type="checkbox" name="servicios" value="Solicitude de RNM" checked class="mt-1 w-4 h-4 text-cyan-600 bg-slate-900 border-slate-700 rounded">
+                    <div>
+                        <span class="font-hud font-bold text-sm text-cyan-300 block">Solicitud de RNM (Policía Federal)</span>
+                        <span class="text-xs text-slate-400">Primera emisión de carnet migratorio.</span>
+                    </div>
+                </label>
+
+                <label class="bg-hud-card p-4 rounded-xl border border-slate-800 hover:border-cyan-500 cursor-pointer transition flex items-start space-x-3">
+                    <input type="checkbox" name="servicios" value="Renovacao de RNM" checked class="mt-1 w-4 h-4 text-cyan-600 bg-slate-900 border-slate-700 rounded">
+                    <div>
+                        <span class="font-hud font-bold text-sm text-cyan-300 block">Renovación de RNM / Protocolo</span>
+                        <span class="text-xs text-slate-400">Actualización de declaraciones y prórroga.</span>
+                    </div>
+                </label>
+
+                <label class="bg-hud-card p-4 rounded-xl border border-slate-800 hover:border-cyan-500 cursor-pointer transition flex items-start space-x-3">
+                    <input type="checkbox" name="servicios" value="Receita Federal (CPF)" checked class="mt-1 w-4 h-4 text-cyan-600 bg-slate-900 border-slate-700 rounded">
+                    <div>
+                        <span class="font-hud font-bold text-sm text-cyan-300 block">Agendamiento Receita Federal (CPF)</span>
+                        <span class="text-xs text-slate-400">Obtención del código CPF legal.</span>
+                    </div>
+                </label>
+            </div>
+
+            <button onclick="goToForm()" class="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-medium rounded-lg text-sm transition shadow-lg">
+                Continuar al Formulario y Carga de Documentos <i class="fa-solid fa-arrow-right ml-2"></i>
+            </button>
+        </section>
+
+        <!-- 3. FORMULARIO OFICIAL, ADJUNTOS Y DECLARACIÓN DE TERCEROS -->
+        <section id="viewForm" class="hidden max-w-3xl mx-auto bg-hud-card p-8 rounded-xl hud-border space-y-6">
+            <div class="border-b border-slate-800 pb-4 flex justify-between items-center">
+                <div>
+                    <span class="text-xs text-cyan-400 font-hud">PASO 2: DATOS Y EVIDENCIAS</span>
+                    <h2 class="font-hud text-xl font-bold text-white mt-1">Formulario y Documentación Oficial</h2>
+                </div>
+                <button type="button" onclick="cargarDatosPrueba()" class="px-3 py-1 bg-cyan-950 text-cyan-400 border border-cyan-500 text-xs rounded hover:bg-cyan-900">
+                    <i class="fa-solid fa-bolt mr-1"></i> Rellenar con Datos de Alexis
+                </button>
+            </div>
+
+            <form id="clientForm" onsubmit="generarDocumentosOficiales(event)" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Nombre Completo (*)</label>
+                        <input type="text" id="fNombre" required class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Filiação 1 (*)</label>
+                        <input type="text" id="fFilial1" required class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Filiação 2 (*)</label>
+                        <input type="text" id="fFilial2" required class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">CPF (si posee)</label>
+                        <input type="text" id="fCpf" class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Fecha de Nacimiento (*)</label>
+                        <input type="date" id="fNacimiento" required class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Número de Pasaporte (*)</label>
+                        <input type="text" id="fPasaporte" required class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Teléfono (con DDD) (*)</label>
+                        <input type="text" id="fTelefono" required class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Correo Electrónico (*)</label>
+                        <input type="email" id="fEmail" required class="w-full bg-slate-900 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <!-- CARGA DE FOTO DE PASAPORTE -->
+                <div class="bg-slate-900 p-4 rounded-lg border border-slate-800 space-y-2">
+                    <label class="block text-xs font-medium text-cyan-400 uppercase font-hud"><i class="fa-solid fa-camera mr-1"></i> Foto del Pasaporte / Identidad (*)</label>
+                    <input type="file" id="filePasaporte" accept="image/*,application/pdf" required class="w-full text-xs text-slate-400 bg-slate-950 border border-slate-700 rounded p-1.5">
+                </div>
+
+                <!-- DIRECCIÓN Y OPCIÓN DE COMPROBANTE DE DOMICILIO -->
+                <div class="bg-slate-900 p-4 rounded-lg border border-slate-800 space-y-3">
+                    <h3 class="text-xs font-hud text-cyan-400 uppercase font-bold"><i class="fa-solid fa-location-dot mr-2"></i> Dirección y Comprobante de Domicilio</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">CEP (*)</label>
+                            <input type="text" id="fCep" maxlength="9" placeholder="00000-000" onblur="buscarCep(this.value)" required class="w-full bg-slate-950 border border-cyan-500/50 rounded px-3 py-2 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Número (*)</label>
+                            <input type="text" id="fNumero" placeholder="Ej: 37" required class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Complemento</label>
+                            <input type="text" id="fComplemento" placeholder="Ej: Casa 5" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="md:col-span-2">
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Logradouro / Calle</label>
+                            <input type="text" id="fLogradouro" readonly class="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-xs text-slate-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Bairro</label>
+                            <input type="text" id="fBairro" readonly class="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-xs text-slate-400">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Cidade</label>
+                            <input type="text" id="fCidade" readonly class="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-xs text-slate-400">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">UF</label>
+                            <input type="text" id="fUf" readonly class="w-full bg-slate-950 border border-slate-800 rounded px-3 py-2 text-xs text-slate-400">
+                        </div>
+                    </div>
+
+                    <!-- CONDICIÓN DE DOMICILIO Y FACTURA DE TERCERO -->
+                    <div class="pt-3 border-t border-slate-800 space-y-3">
+                        <label class="block text-xs font-medium text-slate-300">¿El comprobante de domicilio está a tu nombre o es de un tercero (familiar/propietario)?</label>
+                        <select id="tipoResidencia" onchange="toggleTerceiroFields(this.value)" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                            <option value="propio">El comprobante está a mi nombre</option>
+                            <option value="tercero">Es de un tercero (Generar Declaração de Residência para Cartório)</option>
+                        </select>
+
+                        <div id="terceiroBox" class="hidden space-y-3 p-3 bg-slate-950 rounded border border-slate-800">
+                            <p class="text-[11px] text-cyan-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> El sistema redactará la *Declaração de Residência* para que el dueño la firme y reconozca firma en Cartório.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                <input type="text" id="terceiroNombre" placeholder="Nombre completo del titular de la factura" class="bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-white">
+                                <input type="text" id="terceiroCpf" placeholder="CPF o RG del titular" class="bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-white">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-slate-400 mb-1">Adjuntar foto de la Factura de Servicios (Luz/Agua/Internet a nombre del tercero)[cite: 10]</label>
+                                <input type="file" id="fileFactura" accept="image/*,application/pdf" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded p-1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-slate-900 p-4 rounded-lg border border-slate-800">
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Fecha de Ingreso a Brasil (*)</label>
+                        <input type="date" id="fIngreso" required class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-1">Ciudad / Frontera de Ingreso (*)</label>
+                        <input type="text" id="fFrontera" placeholder="Ej: São Paulo" required class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                    </div>
+                </div>
+
+                <div class="bg-slate-900 p-4 rounded-lg border border-slate-800 space-y-2">
+                    <label class="block text-xs font-medium text-cyan-400 uppercase font-hud">Condición Económica (Hipossuficiência)[cite: 1]</label>
+                    <select id="fHiposuficiencia" class="w-full bg-slate-950 border border-slate-700 rounded px-3 py-2 text-xs text-white">
+                        <option value="Não possuir trabalho remunerado">Não possuir trabalho remunerado</option>
+                        <option value="Não possuir renda">Não possuir renda</option>
+                    </select>
+                </div>
+
+                <!-- FIRMA DIGITAL -->
+                <div class="bg-slate-900 p-4 rounded-lg border border-slate-800 space-y-2">
+                    <label class="block text-xs font-medium text-cyan-400 uppercase font-hud"><i class="fa-solid fa-signature mr-1"></i> Firma Digital del Solicitante</label>
+                    <p class="text-[11px] text-slate-400">Firma en el recuadro usando tu dedo o el ratón:</p>
+                    <div class="border border-cyan-500/50 rounded-lg bg-white overflow-hidden relative">
+                        <canvas id="signatureCanvas" height="130" class="w-full cursor-crosshair"></canvas>
+                        <button type="button" onclick="clearSignature()" class="absolute top-2 right-2 bg-slate-200 text-slate-700 text-xs px-2 py-1 rounded">Limpiar Firma</button>
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-500 text-white font-medium rounded-lg text-sm transition shadow-lg shadow-emerald-900/50">
+                    Generar Documentos Oficiales Exactos <i class="fa-solid fa-file-pdf ml-2"></i>
+                </button>
+            </form>
+        </section>
+
+        <!-- 4. ADMIN -->
+        <section id="viewAdmin" class="hidden space-y-6">
+            <div class="bg-hud-card p-6 rounded-xl hud-border flex justify-between items-center">
+                <div>
+                    <span class="text-xs text-emerald-400 font-hud">PANEL DE GESTIÓN NEXO</span>
+                    <h2 class="font-hud text-xl font-bold text-white mt-1">Expedientes Recibidos Online</h2>
+                </div>
+                <button onclick="logout()" class="px-4 py-2 bg-slate-800 text-xs text-slate-300 rounded-lg border border-slate-700">Cerrar Sesión</button>
+            </div>
+            <div class="bg-hud-card rounded-xl hud-border overflow-hidden">
+                <div class="p-4 border-b border-slate-800 font-hud text-sm font-bold text-cyan-400">Listado de Solicitudes</div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-xs">
+                        <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
+                            <tr>
+                                <th class="p-3">Cliente</th>
+                                <th class="p-3">Pasaporte</th>
+                                <th class="p-3">Trámites</th>
+                                <th class="p-3">Estado</th>
+                                <th class="p-3 text-right">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adminTableBody" class="divide-y divide-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-900">
+        NEXO Consultoria em Trâmites Migratorios &copy; 2026 — Modelo Oficial v16.0
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+        let currentClientEmail = "";
+        let selectedServices = [];
+        let expList = [
+            { id: 1, name: "Alexis Rojas Cordoví", pasaporte: "P563129", services: "Llenado do CONARE, Solicitude de RNM", status: "Firmado & OK" }
+        ];
+
+        function buscarCep(cep) {
+            let valor = cep.replace(/\D/g, '');
+            if (valor.length !== 8) return;
+            fetch(`https://viacep.com.br/ws/${valor}/json/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (!data.erro) {
+                        document.getElementById('fLogradouro').value = data.logradouro;
+                        document.getElementById('fBairro').value = data.bairro;
+                        document.getElementById('fCidade').value = data.localidade;
+                        document.getElementById('fUf').value = data.uf;
+                        document.getElementById('fNumero').focus();
+                    } else {
+                        alert("CEP no encontrado.");
+                    }
+                });
+        }
+
+        function toggleTerceiroFields(val) {
+            const box = document.getElementById('terceiroBox');
+            if(val === 'terceiro') { box.classList.remove('hidden'); }
+            else { box.classList.add('hidden'); }
+        }
+
+        const canvas = document.getElementById('signatureCanvas');
+        const ctx = canvas.getContext('2d');
+        let painting = false;
+
+        canvas.addEventListener('mousedown', (e) => { painting = true; ctx.beginPath(); ctx.moveTo(e.offsetX, e.offsetY); });
+        canvas.addEventListener('mouseup', () => painting = false);
+        canvas.addEventListener('mousemove', (e) => { if (!painting) return; ctx.lineTo(e.offsetX, e.offsetY); ctx.stroke(); });
+        canvas.addEventListener('touchstart', (e) => { e.preventDefault(); painting = true; const r = canvas.getBoundingClientRect(); ctx.beginPath(); ctx.moveTo(e.touches[0].clientX - r.left, e.touches[0].clientY - r.top); });
+        canvas.addEventListener('touchend', () => painting = false);
+        canvas.addEventListener('touchmove', (e) => { e.preventDefault(); if(!painting) return; const r = canvas.getBoundingClientRect(); ctx.lineTo(e.touches[0].clientX - r.left, e.touches[0].clientY - r.top); ctx.stroke(); });
+
+        function clearSignature() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+        function clientLogin() {
+            const email = document.getElementById('loginEmail').value;
+            if(!email) { alert("Ingresa tu correo"); return; }
+            currentClientEmail = email;
+            document.getElementById('viewLogin').classList.add('hidden');
+            document.getElementById('viewServices').classList.remove('hidden');
+            document.getElementById('userNavInfo').classList.remove('hidden');
+            document.getElementById('navUserBadge').innerText = email;
+        }
+
+        function goToForm() {
+            const checkboxes = document.querySelectorAll('input[name="servicios"]:checked');
+            selectedServices = Array.from(checkboxes).map(cb => cb.value);
+            if(selectedServices.length === 0) { alert("Selecciona al menos un servicio"); return; }
+            document.getElementById('viewServices').classList.add('hidden');
+            document.getElementById('viewForm').classList.remove('hidden');
+        }
+
+        function cargarDatosPrueba() {
+            document.getElementById('fNombre').value = "Alexis Rojas Cordoví";
+            document.getElementById('fFilial1').value = "Gloria Cordovi Hernández";
+            document.getElementById('fFilial2').value = "Reinaldo Rojas Lopez";
+            document.getElementById('fCpf').value = "114.469.789-15";
+            document.getElementById('fNacimiento').value = "1971-07-19";
+            document.getElementById('fPasaporte').value = "P563129";
+            document.getElementById('fTelefono').value = "(48) 99805-7737";
+            document.getElementById('fEmail').value = currentClientEmail || "lourdesoto62@gmail.com";
+            
+            document.getElementById('fCep').value = "88058-010";
+            document.getElementById('fNumero').value = "37";
+            document.getElementById('fComplemento').value = "Casa 5";
+            document.getElementById('fLogradouro').value = "Servidão Braulina Machado";
+            document.getElementById('fBairro').value = "Vargem Grande";
+            document.getElementById('fCidade').value = "Florianópolis";
+            document.getElementById('fUf').value = "SC";
+
+            document.getElementById('fIngreso').value = "2026-10-14";
+            document.getElementById('fFrontera').value = "São Paulo (Guarulhos)";
+
+            document.getElementById('tipoResidencia').value = "tercero";
+            toggleTerceiroFields("tercero");
+            document.getElementById('terceiroNombre').value = "Alberto Milan Pérez";
+            document.getElementById('terceiroCpf').value = "052.392.819-04";
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.strokeStyle = '#003366'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(30, 80); ctx.lineTo(100, 30); ctx.lineTo(160, 90); ctx.lineTo(250, 50); ctx.stroke();
+        }
+
+        function switchAdminMode() {
+            document.getElementById('viewLogin').classList.add('hidden');
+            document.getElementById('viewAdmin').classList.remove('hidden');
+            renderAdminTable();
+        }
+
+        function logout() { location.reload(); }
+
+        function generarDocumentosOficiales(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('fNombre').value;
+            const filial1 = document.getElementById('fFilial1').value;
+            const filial2 = document.getElementById('fFilial2').value;
+            const cpf = document.getElementById('fCpf').value || 'Não disponível';
+            const nac = document.getElementById('fNacimiento').value;
+            const pasaporte = document.getElementById('fPasaporte').value;
+            const tel = document.getElementById('fTelefono').value;
+            const email = document.getElementById('fEmail').value;
+            
+            const cep = document.getElementById('fCep').value;
+            const logradouro = document.getElementById('fLogradouro').value;
+            const numero = document.getElementById('fNumero').value;
+            const complemento = document.getElementById('fComplemento').value;
+            const bairro = document.getElementById('fBairro').value;
+            const cidade = document.getElementById('fCidade').value;
+            const uf = document.getElementById('fUf').value;
+            const enderecoCompleto = `${logradouro} #${numero} ${complemento ? '('+complemento+')' : ''}; ${bairro}. ${cidade}. ${uf}. CEP (${cep})`;
+
+            const ingreso = document.getElementById('fIngreso').value;
+            const frontera = document.getElementById('fFrontera').value;
+            const hipo = document.getElementById('fHiposuficiencia').value;
+            const tipoResidencia = document.getElementById('tipoResidencia').value;
+            const terceiroNombre = document.getElementById('terceiroNombre').value;
+            const terceiroCpf = document.getElementById('terceiroCpf').value;
+
+            const fechaActual = new Date().toLocaleDateString('pt-BR');
+            const firmaImagen = canvas.toDataURL("image/png");
+
+            expList.push({ id: expList.length + 1, name: nombre, pasaporte: pasaporte, services: selectedServices.join(', '), status: "Firmado & OK" });
+
+            // Generar documentos oficiales modulares con diseño exacto
+            const win = window.open('', '_blank');
+            win.document.write(`<html><head><title>Documentos Oficiales - ${nombre}</title><style>
+                body{font-family:sans-serif;padding:40px;line-height:1.6;color:#111;}
+                h3{color:#003366;border-bottom:1px solid #003366;padding-bottom:4px;margin-top:30px;}
+                table{width:100%;border-collapse:collapse;margin-top:10px;}
+                th,td{border:1px solid #333;padding:6px;text-align:left;font-size:11px;}
+                .firma-box{margin-top:30px;text-align:right;}
+                img.firma{max-height:60px; display:inline-block;}
+                @media print { body { -webkit-print-color-adjust: exact; } img.firma { max-height: 60px !important; display: inline-block !important; } }
+            </style></head><body>`);
+            
+            win.document.write(`<h2>REPÚBLICA FEDERATIVA DO BRASIL - POLÍCIA FEDERAL</h2>`);
+            win.document.write(`<p><strong>Trámites Solicitados:</strong> ${selectedServices.join(' | ')}</p><hr>`);
+
+            if (selectedServices.includes('Llenado do CONARE') || selectedServices.includes('Renovacao de RNM')) {
+                win.document.write(`<h3>DECLARAÇÃO ELETRÔNICA E DEMAIS MEIOS DE CONTATO</h3>`);
+                win.document.write(`<table>`);
+                win.document.write(`<tr><th>Nome completo</th><td>${nombre}</td></tr>`);
+                win.document.write(`<tr><th>Filiação 1</th><td>${filial1}</td></tr>`);
+                win.document.write(`<tr><th>Filiação 2</th><td>${filial2}</td></tr>`);
+                win.document.write(`<tr><th>CPF</th><td>${cpf}</td></tr>`);
+                win.document.write(`<tr><th>Data de nascimento</th><td>${nac}</td></tr>`);
+                win.document.write(`<tr><th>Documento identidade</th><td>${pasaporte} (Passaporte)</td></tr>`);
+                win.document.write(`<tr><th>Nacionalidade</th><td>Cubana</td></tr>`);
+                win.document.write(`<tr><th>Telefones</th><td>${tel}</td></tr>`);
+                win.document.write(`<tr><th>E-mail</th><td>${email}</td></tr>`);
+                win.document.write(`<tr><th>Endereço</th><td>${enderecoCompleto}</td></tr>`);
+                win.document.write(`</table>`);
+                win.document.write(`<div class="firma-box"><p>${cidade}/${uf}, ${fechaActual}</p><br><img src="${firmaImagen}" class="firma"><br><strong>_______________________________________________</strong><br>Assinatura do Declarante</div>`);
+            }
+
+            if (tipoResidencia === 'tercero') {
+                win.document.write(`<div style="page-break-before: always;"></div>`);
+                win.document.write(`<h3>DECLARAÇÃO DE RESIDÊNCIA (PARA RECONOCER FIRMA EN CARTÓRIO)</h3>`);
+                win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${terceiroNombre}</strong>, CPF: <strong>${terceiroCpf}</strong>, residente em ${enderecoCompleto}, DECLARO para fins de comprovação de residência que o(a) Sr(a). <strong>${nombre}</strong>, CPF: <strong>${cpf}</strong>, Passaporte: <strong>${pasaporte}</strong>, reside em meu imóvel na condição de <em>membro da família / cedido</em>.</p>`);
+                win.document.write(`<p style="font-size:11px;margin-top:10px;color:#555;">(Este documento debe ser impreso y firmado por el titular del servicio/propietario de la factura ante el Cartório de Notas)[cite: 9].</p>`);
+                win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>${cidade}, ${fechaActual}</p><br><strong>_______________________________________________</strong><br>Assinatura do Declarante (Titular da Conta/Imóvel)[cite: 9]</div>`);
+            }
+
+            if (selectedServices.includes('Solicitude de RNM') || selectedServices.includes('Renovacao de RNM')) {
+                win.document.write(`<div style="page-break-before: always;"></div>`);
+                win.document.write(`<h3>DECLARAÇÃO DE ENTRADA EM TERRITÓRIO BRASILEIRO</h3>`);
+                win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${nombre}</strong>, natural de Cuba, portador do documento <strong>${pasaporte}</strong>, declaro, para fins de AUTORIZAÇÃO DE RESIDÊNCIA, que ingressei em território brasileiro na data de <strong>${ingreso}</strong>, através da fronteira/cidade <strong>${frontera}</strong>, conforme o art. 71, do Decreto 9.199/2017[cite: 1, 7].</p>`);
+                win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>${cidade}/${uf}, ${fechaActual}</p><br><img src="${firmaImagen}" class="firma"><br><strong>_______________________________________________</strong><br>Assinatura(s)[cite: 7]</div>`);
+
+                win.document.write(`<div style="page-break-before: always;"></div>`);
+                win.document.write(`<h3>DECLARAÇÃO DE HIPOSSUFICIÊNCIA ECONÔMICA</h3>`);
+                win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${nombre}</strong>, portador do documento <strong>${pasaporte}</strong>, DECLARO perante a Polícia Federal... Justifica-se em razão de: <strong>${hipo}</strong>[cite: 1, 8].</p>`);
+                win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>Local: ${cidade}/${uf} &nbsp;&nbsp;&nbsp;&nbsp; Data: ${fechaActual}</p><br><img src="${firmaImagen}" class="firma"><br><strong>_______________________________________________</strong><br>Assinatura[cite: 8]</div>`);
+            }
+
+            win.document.write(`</body></html>`);
+            win.document.close();
+            
+            setTimeout(() => { win.focus(); win.print(); }, 300);
+            alert("¡Documentos oficiales generados con éxito con el diseño exacto y la firma digital incorporada!");
+            switchAdminMode();
+        }
+
+        function renderAdminTable() {
+            const tbody = document.getElementById('adminTableBody');
+            tbody.innerHTML = '';
+            expList.forEach(i => {
+                tbody.innerHTML += `<tr class="hover:bg-slate-900"><td class="p-3">${i.name}</td><td class="p-3">${i.pasaporte}</td><td class="p-3">${i.services}</td><td class="p-3 text-emerald-400">${i.status}</td><td class="p-3 text-right"><button onclick="alert('Expediente completo y firmado')" class="px-2 py-1 bg-cyan-700 text-white rounded">Ver</button></td></tr>`;
+            });
+        }
+    </script>
+</body>
+</html>
