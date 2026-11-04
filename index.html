@@ -44,8 +44,8 @@
                 <i class="fa-solid fa-file-invoice text-lg"></i>
             </div>
             <div>
-                <h1 class="font-hud font-bold text-xl text-cyan-400 tracking-wider">NEXO <span class="text-xs px-2 py-0.5 rounded bg-blue-900 text-blue-300 border border-blue-500">MODELO OFICIAL v16.0</span></h1>
-                <p class="text-xs text-slate-400">Expedientes Exactos para la Polícia Federal</p>
+                <h1 class="font-hud font-bold text-xl text-cyan-400 tracking-wider">NEXO <span class="text-xs px-2 py-0.5 rounded bg-blue-900 text-blue-300 border border-blue-500">GESTIÓN v17.0</span></h1>
+                <p class="text-xs text-slate-400">Panel de Control y Expedientes de la Polícia Federal</p>
             </div>
         </div>
         <div id="userNavInfo" class="hidden flex items-center space-x-4">
@@ -59,13 +59,13 @@
     <!-- MAIN CONTAINER -->
     <main class="flex-1 max-w-4xl w-full mx-auto p-4 md:p-6 space-y-6">
 
-        <!-- 1. ACCESO CLIENTE -->
+        <!-- 1. ACCESO CLIENTE / GESTOR -->
         <section id="viewLogin" class="max-w-md mx-auto mt-12 bg-hud-card p-8 rounded-xl hud-border">
             <div class="text-center mb-6">
                 <div class="inline-block p-3 rounded-full bg-cyan-950 border border-cyan-500 mb-2">
                     <i class="fa-solid fa-id-card text-3xl text-cyan-400"></i>
                 </div>
-                <h2 class="font-hud text-2xl font-bold text-cyan-400">ACCESO CLIENTE</h2>
+                <h2 class="font-hud text-2xl font-bold text-cyan-400">ACCESO AL PORTAL</h2>
                 <p class="text-sm text-slate-400 mt-1">Plataforma Oficial de Trámites Migratorios</p>
             </div>
             <div class="space-y-4">
@@ -74,11 +74,11 @@
                     <input type="email" id="loginEmail" placeholder="cliente@correo.com" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-4 py-2.5 text-sm text-white focus:border-cyan-400 focus:outline-none">
                 </div>
                 <button onclick="clientLogin()" class="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-medium rounded-lg text-sm transition shadow-lg shadow-cyan-900/50">
-                    Ingresar al Portal
+                    Ingresar como Cliente
                 </button>
                 <div class="mt-4 pt-4 border-t border-slate-800 text-center">
-                    <button onclick="switchAdminMode()" class="text-xs text-slate-400 hover:text-cyan-400 underline">
-                        Panel de Administración (Gestor NEXO)
+                    <button onclick="switchAdminMode()" class="text-xs text-cyan-400 hover:text-cyan-400 underline font-semibold">
+                        <i class="fa-solid fa-user-shield mr-1"></i> Entrar al Panel del Gestor (Admin)
                     </button>
                 </div>
             </div>
@@ -235,13 +235,13 @@
                         </select>
 
                         <div id="terceiroBox" class="hidden space-y-3 p-3 bg-slate-950 rounded border border-slate-800">
-                            <p class="text-[11px] text-cyan-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> El sistema redactará la *Declaração de Residência* para que el dueño la firme y reconozca firma en Cartório.</p>
+                            <p class="text-[11px] text-cyan-400"><i class="fa-solid fa-triangle-exclamation mr-1"></i> El sistema redactará la *Declaração de Residência* para que el dueño la firme y reconozca firma en Cartório[cite: 9].</p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
                                 <input type="text" id="terceiroNombre" placeholder="Nombre completo del titular de la factura" class="bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-white">
                                 <input type="text" id="terceiroCpf" placeholder="CPF o RG del titular" class="bg-slate-900 border border-slate-700 rounded px-3 py-1.5 text-xs text-white">
                             </div>
                             <div>
-                                <label class="block text-xs text-slate-400 mb-1">Adjuntar foto de la Factura de Servicios (Luz/Agua/Internet a nombre del tercero)[cite: 10]</label>
+                                <label class="block text-xs text-slate-400 mb-1">Adjuntar foto de la Factura de Servicios[cite: 10]</label>
                                 <input type="file" id="fileFactura" accept="image/*,application/pdf" class="w-full text-xs text-slate-400 bg-slate-900 border border-slate-700 rounded p-1">
                             </div>
                         </div>
@@ -283,7 +283,7 @@
             </form>
         </section>
 
-        <!-- 4. ADMIN -->
+        <!-- 4. ADMIN - VISTA DEL GESTOR FUNCIONAL -->
         <section id="viewAdmin" class="hidden space-y-6">
             <div class="bg-hud-card p-6 rounded-xl hud-border flex justify-between items-center">
                 <div>
@@ -293,7 +293,7 @@
                 <button onclick="logout()" class="px-4 py-2 bg-slate-800 text-xs text-slate-300 rounded-lg border border-slate-700">Cerrar Sesión</button>
             </div>
             <div class="bg-hud-card rounded-xl hud-border overflow-hidden">
-                <div class="p-4 border-b border-slate-800 font-hud text-sm font-bold text-cyan-400">Listado de Solicitudes</div>
+                <div class="p-4 border-b border-slate-800 font-hud text-sm font-bold text-cyan-400">Listado de Solicitudes de Clientes</div>
                 <div class="overflow-x-auto">
                     <table class="w-full text-left text-xs">
                         <thead class="bg-slate-900 text-slate-400 border-b border-slate-800">
@@ -302,7 +302,7 @@
                                 <th class="p-3">Pasaporte</th>
                                 <th class="p-3">Trámites</th>
                                 <th class="p-3">Estado</th>
-                                <th class="p-3 text-right">Acción</th>
+                                <th class="p-3 text-right">Acción del Gestor</th>
                             </tr>
                         </thead>
                         <tbody id="adminTableBody" class="divide-y divide-slate-800"></tbody>
@@ -314,15 +314,37 @@
     </main>
 
     <footer class="text-center py-4 text-xs text-slate-500 border-t border-slate-900">
-        NEXO Consultoria em Trâmites Migratorios &copy; 2026 — Modelo Oficial v16.0
+        NEXO Consultoria em Trâmites Migratorios &copy; 2026 — Vista Gestor v17.0
     </footer>
 
     <!-- SCRIPT -->
     <script>
         let currentClientEmail = "";
         let selectedServices = [];
+        
+        // Base de datos local simulada para el gestor con datos reales de prueba
         let expList = [
-            { id: 1, name: "Alexis Rojas Cordoví", pasaporte: "P563129", services: "Llenado do CONARE, Solicitude de RNM", status: "Firmado & OK" }
+            { 
+                id: 1, 
+                name: "Alexis Rojas Cordoví", 
+                filial1: "Gloria Cordovi Hernández",
+                filial2: "Reinaldo Rojas Lopez",
+                cpf: "114.469.789-15",
+                nacimiento: "19/07/1971",
+                pasaporte: "P563129", 
+                telefono: "(48) 99805-7737",
+                email: "lourdesoto62@gmail.com",
+                direccion: "Servidão Braulina Machado #37 (Casa 5); Vargem Grande. Florianópolis. SC. CEP (88058-010)",
+                ingreso: "14/10/2026",
+                frontera: "São Paulo (Guarulhos)",
+                hiposuficiencia: "Não possuir trabalho remunerado",
+                services: "Llenado do CONARE, Solicitude de RNM", 
+                tipoResid: "tercero",
+                tercNombre: "Alberto Milan Pérez",
+                tercCpf: "052.392.819-04",
+                status: "Firmado & OK",
+                firma: "" // Se autogenera o se queda en blanco si es registro previo
+            }
         ];
 
         function buscarCep(cep) {
@@ -413,6 +435,8 @@
 
         function switchAdminMode() {
             document.getElementById('viewLogin').classList.add('hidden');
+            document.getElementById('viewServices').classList.add('hidden');
+            document.getElementById('viewForm').classList.add('hidden');
             document.getElementById('viewAdmin').classList.remove('hidden');
             renderAdminTable();
         }
@@ -445,77 +469,112 @@
             const tipoResidencia = document.getElementById('tipoResidencia').value;
             const terceiroNombre = document.getElementById('terceiroNombre').value;
             const terceiroCpf = document.getElementById('terceiroCpf').value;
-
-            const fechaActual = new Date().toLocaleDateString('pt-BR');
             const firmaImagen = canvas.toDataURL("image/png");
 
-            expList.push({ id: expList.length + 1, name: nombre, pasaporte: pasaporte, services: selectedServices.join(', '), status: "Firmado & OK" });
+            // Guardar en la base de datos simulada del gestor
+            expList.push({ 
+                id: expList.length + 1, 
+                name: nombre, 
+                filial1: filial1,
+                filial2: filial2,
+                cpf: cpf,
+                nacimiento: nac,
+                pasaporte: pasaporte, 
+                telefono: tel,
+                email: email,
+                direccion: enderecoCompleto,
+                ingreso: ingreso,
+                frontera: frontera,
+                hiposuficiencia: hipo,
+                services: selectedServices.join(', '), 
+                tipoResid: tipoResidencia,
+                tercNombre: terceiroNombre,
+                tercCpf: terceiroCpf,
+                status: "Firmado & OK",
+                firma: firmaImagen
+            });
 
-            // Generar documentos oficiales modulares con diseño exacto
+            alert("¡Tus documentos han sido generados y enviados al gestor correctamente!");
+            switchAdminMode();
+        }
+
+        // FUNCIÓN CLAVE: EL GESTOR PUEDE VER Y DESCARGAR EL EXPEDIENTE COMPLETO DEL CLIENTE
+        function verExpedienteGestor(index) {
+            const client = expList[index];
+            const fechaActual = new Date().toLocaleDateString('pt-BR');
+
             const win = window.open('', '_blank');
-            win.document.write(`<html><head><title>Documentos Oficiales - ${nombre}</title><style>
+            win.document.write(`<html><head><title>Expediente Oficial - ${client.name}</title><style>
                 body{font-family:sans-serif;padding:40px;line-height:1.6;color:#111;}
                 h3{color:#003366;border-bottom:1px solid #003366;padding-bottom:4px;margin-top:30px;}
                 table{width:100%;border-collapse:collapse;margin-top:10px;}
                 th,td{border:1px solid #333;padding:6px;text-align:left;font-size:11px;}
                 .firma-box{margin-top:30px;text-align:right;}
                 img.firma{max-height:60px; display:inline-block;}
-                @media print { body { -webkit-print-color-adjust: exact; } img.firma { max-height: 60px !important; display: inline-block !important; } }
+                .print-btn{background:#003366;color:#fff;padding:10px 20px;border:none;cursor:pointer;font-size:14px;border-radius:5px;margin-bottom:20px;}
+                @media print { .print-btn { display: none; } body { -webkit-print-color-adjust: exact; } }
             </style></head><body>`);
             
-            win.document.write(`<h2>REPÚBLICA FEDERATIVA DO BRASIL - POLÍCIA FEDERAL</h2>`);
-            win.document.write(`<p><strong>Trámites Solicitados:</strong> ${selectedServices.join(' | ')}</p><hr>`);
+            win.document.write(`<button class="print-btn" onclick="window.print()"><i class="fa-solid fa-file-pdf"></i> Imprimir / Guardar Expediente PDF</button>`);
+            win.document.write(`<h2>REPÚBLICA FEDERATIVA DO BRASIL - POLÍCIA FEDERAL (EXPEDIENTE NEXO)</h2>`);
+            win.document.write(`<p><strong>Cliente:</strong> ${client.name} | <strong>Pasaporte:</strong> ${client.pasaporte} | <strong>Trámites:</strong> ${client.services}</p><hr>`);
 
-            if (selectedServices.includes('Llenado do CONARE') || selectedServices.includes('Renovacao de RNM')) {
-                win.document.write(`<h3>DECLARAÇÃO ELETRÔNICA E DEMAIS MEIOS DE CONTATO</h3>`);
-                win.document.write(`<table>`);
-                win.document.write(`<tr><th>Nome completo</th><td>${nombre}</td></tr>`);
-                win.document.write(`<tr><th>Filiação 1</th><td>${filial1}</td></tr>`);
-                win.document.write(`<tr><th>Filiação 2</th><td>${filial2}</td></tr>`);
-                win.document.write(`<tr><th>CPF</th><td>${cpf}</td></tr>`);
-                win.document.write(`<tr><th>Data de nascimento</th><td>${nac}</td></tr>`);
-                win.document.write(`<tr><th>Documento identidade</th><td>${pasaporte} (Passaporte)</td></tr>`);
-                win.document.write(`<tr><th>Nacionalidade</th><td>Cubana</td></tr>`);
-                win.document.write(`<tr><th>Telefones</th><td>${tel}</td></tr>`);
-                win.document.write(`<tr><th>E-mail</th><td>${email}</td></tr>`);
-                win.document.write(`<tr><th>Endereço</th><td>${enderecoCompleto}</td></tr>`);
-                win.document.write(`</table>`);
-                win.document.write(`<div class="firma-box"><p>${cidade}/${uf}, ${fechaActual}</p><br><img src="${firmaImagen}" class="firma"><br><strong>_______________________________________________</strong><br>Assinatura do Declarante</div>`);
-            }
+            // 1. Declaración Electrónica
+            win.document.write(`<h3>DECLARAÇÃO ELETRÔNICA E DEMAIS MEIOS DE CONTATO</h3>`);
+            win.document.write(`<table>`);
+            win.document.write(`<tr><th>Nome completo</th><td>${client.name}</td></tr>`);
+            win.document.write(`<tr><th>Filiação 1</th><td>${client.filial1}</td></tr>`);
+            win.document.write(`<tr><th>Filiação 2</th><td>${client.filial2}</td></tr>`);
+            win.document.write(`<tr><th>CPF</th><td>${client.cpf}</td></tr>`);
+            win.document.write(`<tr><th>Data de nascimento</th><td>${client.nacimiento}</td></tr>`);
+            win.document.write(`<tr><th>Documento identidade</th><td>${client.pasaporte} (Passaporte)</td></tr>`);
+            win.document.write(`<tr><th>Nacionalidade</th><td>Cubana</td></tr>`);
+            win.document.write(`<tr><th>Telefones</th><td>${client.telefono}</td></tr>`);
+            win.document.write(`<tr><th>E-mail</th><td>${client.email}</td></tr>`);
+            win.document.write(`<tr><th>Endereço</th><td>${client.direccion}</td></tr>`);
+            win.document.write(`</table>`);
+            win.document.write(`<div class="firma-box"><p>Florianópolis/SC, ${fechaActual}</p><br>${client.firma ? '<img src="'+client.firma+'" class="firma"><br>' : ''}<strong>_______________________________________________</strong><br>Assinatura do Declarante</div>`);
 
-            if (tipoResidencia === 'tercero') {
+            // 2. Declaración de Residencia de Tercero (si aplica)
+            if (client.tipoResid === 'tercero') {
                 win.document.write(`<div style="page-break-before: always;"></div>`);
                 win.document.write(`<h3>DECLARAÇÃO DE RESIDÊNCIA (PARA RECONOCER FIRMA EN CARTÓRIO)</h3>`);
-                win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${terceiroNombre}</strong>, CPF: <strong>${terceiroCpf}</strong>, residente em ${enderecoCompleto}, DECLARO para fins de comprovação de residência que o(a) Sr(a). <strong>${nombre}</strong>, CPF: <strong>${cpf}</strong>, Passaporte: <strong>${pasaporte}</strong>, reside em meu imóvel na condição de <em>membro da família / cedido</em>.</p>`);
-                win.document.write(`<p style="font-size:11px;margin-top:10px;color:#555;">(Este documento debe ser impreso y firmado por el titular del servicio/propietario de la factura ante el Cartório de Notas)[cite: 9].</p>`);
-                win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>${cidade}, ${fechaActual}</p><br><strong>_______________________________________________</strong><br>Assinatura do Declarante (Titular da Conta/Imóvel)[cite: 9]</div>`);
+                win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${client.tercNombre}</strong>, CPF/RG: <strong>${client.tercCpf}</strong>, residente em ${client.direccion}, DECLARO para fins de comprovação de residência que o(a) Sr(a). <strong>${client.name}</strong>, CPF: <strong>${client.cpf}</strong>, Passaporte: <strong>${client.pasaporte}</strong>, reside em meu imóvel na condição de <em>membro da família / cedido</em>[cite: 9].</p>`);
+                win.document.write(`<p style="font-size:11px;margin-top:10px;color:#555;">(Este documento debe ser impreso y firmado por el propietario ante el Cartório de Notas)[cite: 9].</p>`);
+                win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>Florianópolis, ${fechaActual}</p><br><strong>_______________________________________________</strong><br>Assinatura do Declarante (Titular da Conta/Imóvel)[cite: 9]</div>`);
             }
 
-            if (selectedServices.includes('Solicitude de RNM') || selectedServices.includes('Renovacao de RNM')) {
-                win.document.write(`<div style="page-break-before: always;"></div>`);
-                win.document.write(`<h3>DECLARAÇÃO DE ENTRADA EM TERRITÓRIO BRASILEIRO</h3>`);
-                win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${nombre}</strong>, natural de Cuba, portador do documento <strong>${pasaporte}</strong>, declaro, para fins de AUTORIZAÇÃO DE RESIDÊNCIA, que ingressei em território brasileiro na data de <strong>${ingreso}</strong>, através da fronteira/cidade <strong>${frontera}</strong>, conforme o art. 71, do Decreto 9.199/2017[cite: 1, 7].</p>`);
-                win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>${cidade}/${uf}, ${fechaActual}</p><br><img src="${firmaImagen}" class="firma"><br><strong>_______________________________________________</strong><br>Assinatura(s)[cite: 7]</div>`);
+            // 3. Declaración de Entrada
+            win.document.write(`<div style="page-break-before: always;"></div>`);
+            win.document.write(`<h3>DECLARAÇÃO DE ENTRADA EM TERRITÓRIO BRASILEIRO</h3>`);
+            win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${client.name}</strong>, natural de Cuba, portador do documento <strong>${client.pasaporte}</strong>, declaro, para fins de AUTORIZAÇÃO DE RESIDÊNCIA, que ingressei em território brasileiro na data de <strong>${client.ingreso}</strong>, através da fronteira/cidade <strong>${client.frontera}</strong>, conforme o art. 71, do Decreto 9.199/2017[cite: 1, 7].</p>`);
+            win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>Florianópolis/SC, ${fechaActual}</p><br>${client.firma ? '<img src="'+client.firma+'" class="firma"><br>' : ''}<strong>_______________________________________________</strong><br>Assinatura(s)[cite: 7]</div>`);
 
-                win.document.write(`<div style="page-break-before: always;"></div>`);
-                win.document.write(`<h3>DECLARAÇÃO DE HIPOSSUFICIÊNCIA ECONÔMICA</h3>`);
-                win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${nombre}</strong>, portador do documento <strong>${pasaporte}</strong>, DECLARO perante a Polícia Federal... Justifica-se em razão de: <strong>${hipo}</strong>[cite: 1, 8].</p>`);
-                win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>Local: ${cidade}/${uf} &nbsp;&nbsp;&nbsp;&nbsp; Data: ${fechaActual}</p><br><img src="${firmaImagen}" class="firma"><br><strong>_______________________________________________</strong><br>Assinatura[cite: 8]</div>`);
-            }
+            // 4. Hiposuficiencia
+            win.document.write(`<div style="page-break-before: always;"></div>`);
+            win.document.write(`<h3>DECLARAÇÃO DE HIPOSSUFICIÊNCIA ECONÔMICA</h3>`);
+            win.document.write(`<p style="font-size:12px;margin-top:20px;">Eu, <strong>${client.name}</strong>, portador do documento <strong>${client.pasaporte}</strong>, DECLARO perante a Polícia Federal... Justifica-se em razão de: <strong>${client.hiposuficiencia}</strong>[cite: 1, 8].</p>`);
+            win.document.write(`<div class="firma-box" style="margin-top:60px;"><p>Local: Florianópolis/SC &nbsp;&nbsp;&nbsp;&nbsp; Data: ${fechaActual}</p><br>${client.firma ? '<img src="'+client.firma+'" class="firma"><br>' : ''}<strong>_______________________________________________</strong><br>Assinatura[cite: 8]</div>`);
 
             win.document.write(`</body></html>`);
             win.document.close();
-            
-            setTimeout(() => { win.focus(); win.print(); }, 300);
-            alert("¡Documentos oficiales generados con éxito con el diseño exacto y la firma digital incorporada!");
-            switchAdminMode();
         }
 
         function renderAdminTable() {
             const tbody = document.getElementById('adminTableBody');
             tbody.innerHTML = '';
-            expList.forEach(i => {
-                tbody.innerHTML += `<tr class="hover:bg-slate-900"><td class="p-3">${i.name}</td><td class="p-3">${i.pasaporte}</td><td class="p-3">${i.services}</td><td class="p-3 text-emerald-400">${i.status}</td><td class="p-3 text-right"><button onclick="alert('Expediente completo y firmado')" class="px-2 py-1 bg-cyan-700 text-white rounded">Ver</button></td></tr>`;
+            expList.forEach((i, index) => {
+                tbody.innerHTML += `<tr class="hover:bg-slate-900">
+                    <td class="p-3 font-semibold text-white">${i.name}</td>
+                    <td class="p-3">${i.pasaporte}</td>
+                    <td class="p-3">${i.services}</td>
+                    <td class="p-3 text-emerald-400">${i.status}</td>
+                    <td class="p-3 text-right">
+                        <button onclick="verExpedienteGestor(${index})" class="px-3 py-1.5 bg-cyan-600 hover:bg-cyan-500 text-white rounded font-medium shadow transition">
+                            <i class="fa-solid fa-eye mr-1"></i> Ver Expediente
+                        </button>
+                    </td>
+                </tr>`;
             });
         }
     </script>
